@@ -1,0 +1,22 @@
+*{
+  
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+.no-margin-padding{
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.main-heading{
+  color: #fff;
+}
+
+.space{
+  margin: 32px 0;
+}
+
+.black-back {
+  background-color: #000 !important;
+}
