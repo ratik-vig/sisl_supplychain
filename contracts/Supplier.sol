@@ -25,6 +25,7 @@ contract Supplier {
     struct Worker{
         string fname;
         string lname;
+        address addr;
     }
 
     string public supp_name;
@@ -39,7 +40,12 @@ contract Supplier {
         manager = _manager;
     }
 
-    function add_worker(address _addr) public {
+    function add_worker(string memory _fname, string memory _lname, address _addr) public {
+        workers[_addr] = Worker({
+            fname: _fname,
+            lname: _lname,
+            addr: _addr
+        });
         workers_lookup.push(_addr);
     } 
 

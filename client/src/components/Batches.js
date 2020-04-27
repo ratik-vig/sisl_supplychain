@@ -6,6 +6,8 @@ import SupplierFactory from "../contracts/SupplierFactory.json"
 import {Container,Row,ListGroup,Button, Modal} from 'react-bootstrap'
 import Create from '../components/Create'
 import SupplierList from '../components/SupplierList'
+const Web3 = require('web3');
+
 
 class Batches extends React.Component{
     constructor(props){
@@ -16,7 +18,15 @@ class Batches extends React.Component{
         }
     }
 
-    
+    componentDidMount = async() => {
+        try{
+          const web3 = new Web3(
+            new Web3.providers.HttpProvider('https://rinkeby.infura.io/v3/a2e374ab89124948a683277311c6e91e')
+          );
+        }catch(error){
+          console.log(error)
+        }
+      }
 
     showModal = () => {
         this.setState({show: true})
@@ -46,6 +56,7 @@ class Batches extends React.Component{
             </Container>
  
             </Container>
+            
         )
     }
 }

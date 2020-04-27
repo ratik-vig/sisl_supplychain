@@ -11,8 +11,14 @@ class Workers extends React.Component{
     constructor(props){
         super(props)
         this.state={
-            show: false
+            show: false,
+            address: ''
         }
+    }
+
+    componentDidMount = () =>{
+        const {address} = this.props.match.params
+        this.setState({address})
     }
 
     showModal = () => {
@@ -26,11 +32,12 @@ class Workers extends React.Component{
     render(){
         return(
             <Container fluid className="m-0 p-0">
-                <NavBar/>
+                
+                <NavBar contract={this.state.address}/>
             
             <Container className="mt-3 pr-3 pl-3">
                 
-            <CreateWorker show={this.state.show} onHide={this.handleClose}/>
+            <CreateWorker show={this.state.show} onHide={this.handleClose} contract={this.state.address}/>
                 <Row className="justify-content-between pl-3 pr-3">
                     <h3>Workers</h3>
                     <Button variant="primary" onClick={this.showModal}>Add Worker</Button>
@@ -40,7 +47,7 @@ class Workers extends React.Component{
                     
                     <Row className="justify-content-center">
 
-                        <WorkerTable/>
+                        <WorkerTable contract={this.state.address} />
                     </Row>
                 </Container>
  

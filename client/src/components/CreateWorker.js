@@ -3,6 +3,7 @@ import "../App.css";
 import Supplier from "../contracts/Supplier.json"
 import {Container, Row, Form, Button, Spinner,Modal} from 'react-bootstrap';
 import getWeb3 from "../getWeb3";
+import Web3 from 'web3';
 
 class CreateWorker extends React.Component{
 
@@ -25,13 +26,13 @@ class CreateWorker extends React.Component{
 
     componentDidMount = async()  => {
         try{
-            const web3 = await getWeb3()
+            const web3 = new Web3(Web3.givenProvider || "https://rinkeby.infura.io/v3/a2e374ab89124948a683277311c6e91e");
             const accounts = await web3.eth.getAccounts();
             const networkId = await web3.eth.net.getId();
             const deployedNetwork = Supplier.networks[networkId];
             const instance = new web3.eth.Contract(
                 Supplier.abi,
-                deployedNetwork && deployedNetwork.address,
+                deployedNetwork && this.props.contract,
             );
             await this.setState({web3, accounts, contract: instance})
         
@@ -63,7 +64,7 @@ class CreateWorker extends React.Component{
         console.log(this.state.accounts[0])
         this.setState({loading: true})
         try{
-            await this.state.contract.methods.add_worker(this.state.ethaddr).send({from: this.state.accounts[0]})
+            await this.state.contract.methods.add_worker(this.state.fname, this.state.lname, this.state.ethaddr).send({from: this.state.accounts[0]})
         }catch(error){
             console.log(error.message)
             alert(error.message)

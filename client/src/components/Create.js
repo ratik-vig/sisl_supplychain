@@ -3,10 +3,10 @@ import "../App.css";
 import SupplierFactory from "../contracts/SupplierFactory.json"
 import {Container, Row, Form, Button, Spinner,Modal} from 'react-bootstrap';
 import getWeb3 from "../getWeb3";
+import Web3 from 'web3';
+
 
 class Create extends React.Component{
-
-
 
     constructor(props){
         super(props)
@@ -23,8 +23,10 @@ class Create extends React.Component{
 
     componentDidMount = async()  => {
         try{
-            const web3 = await getWeb3()
+            const web3 = new Web3(Web3.givenProvider || "https://rinkeby.infura.io/v3/a2e374ab89124948a683277311c6e91e");
+            
             const accounts = await web3.eth.getAccounts();
+                    
             const networkId = await web3.eth.net.getId();
             const deployedNetwork = SupplierFactory.networks[networkId];
             const instance = new web3.eth.Contract(
@@ -32,7 +34,7 @@ class Create extends React.Component{
                 deployedNetwork && deployedNetwork.address,
             );
             await this.setState({web3, accounts, contract: instance})
-        
+            console.log(this.state)
         }catch(error){
             alert('connection failed')
             console.log(error)
@@ -65,7 +67,7 @@ class Create extends React.Component{
     render(){
         return(
             
-            <Modal show={this.props.show} onHide={this.props.onHide} centered>
+            <Modal show={this.props.show} onHide={this.props.onHide}>
                 <Modal.Header closeButton>
                     <Modal.Title>Create new supplier</Modal.Title>
                 </Modal.Header>
@@ -75,7 +77,7 @@ class Create extends React.Component{
                             <Form onSubmit={this.handleSubmit} className="w-75" style={{maxWidth: '500px'}}>
                             <Form.Group controlId="ethAddress" >
                                 <Form.Label>Ethereum address</Form.Label>
-                                <Form.Control  type="text" placeholder="Enter ethereum address" value={this.state.accounts}/>
+                                <Form.Control  type="text" placeholder="Enter ethereum address" value={this.state.accounts} readOnly/>
                             </Form.Group>
 
                             <Form.Group controlId="suppliername">
