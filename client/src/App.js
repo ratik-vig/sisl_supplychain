@@ -5,7 +5,7 @@ import Create from "./components/Create";
 import Batches from "./components/Batches"
 import Suppliers from './components/SupplierList'
 import NavBar from './components/NavBar'
-import Workers from './components/Workers'
+import AdminDashboard from './components/AdminDashboard'
 import WorkerTable from './components/WorkerTable'
 import CreateWorker from './components/CreateWorker'
 import {
@@ -26,8 +26,8 @@ class App extends React.Component{
         <Router>
         <Switch>
           <Route exact path = "/" component={Landing} />
-          <Route path={'/suppliers/:address/admin'} component={Workers}/>
-          <Route path="/suppliers" component={Batches} />
+          <Route path={'/suppliers/:address/admin'} component={AdminDashboard}/>
+          <Route path="/suppliers" render={() => <Batches />} />
           
         </Switch>
       </Router>

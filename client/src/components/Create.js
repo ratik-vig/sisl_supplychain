@@ -34,7 +34,6 @@ class Create extends React.Component{
                 deployedNetwork && deployedNetwork.address,
             );
             await this.setState({web3, accounts, contract: instance})
-            console.log(this.state)
         }catch(error){
             alert('connection failed')
             console.log(error)
@@ -59,6 +58,7 @@ class Create extends React.Component{
         }
         
         this.setState({loading: false})
+        this.props.updateUI()
         this.props.onHide()
     }
 

@@ -5,8 +5,12 @@ import getWeb3 from "../getWeb3";
 import NavBar from "./NavBar"
 import WorkerTable from "./WorkerTable"
 import CreateWorker from "./CreateWorker"
+import {BrowserRouter as Router, Switch, Route} from "react-router-dom"
+import AdminWorkerTab from './AdminWorkerTab';
+import AdminHome from './AdminHome'
+import AdminCatalogue from './AdminCatalogue'
 
-class Workers extends React.Component{
+class AdminDashboard extends React.Component{
     
     constructor(props){
         super(props)
@@ -31,31 +35,20 @@ class Workers extends React.Component{
 
     render(){
         return(
+            <Router>
             <Container fluid className="m-0 p-0">
-                
                 <NavBar contract={this.state.address}/>
+                <Switch>
+                    <Route exact path = '/suppliers/:address/admin' component={AdminHome} />
+                    <Route path= '/suppliers/:address/admin/workers' component={AdminWorkerTab}/>
+                    <Route path = '/suppliers/:address/admin/catalogue' component={AdminCatalogue}/>
+                </Switch>
             
-            <Container className="mt-3 pr-3 pl-3">
-                
-            <CreateWorker show={this.state.show} onHide={this.handleClose} contract={this.state.address}/>
-                <Row className="justify-content-between pl-3 pr-3">
-                    <h3>Workers</h3>
-                    <Button variant="primary" onClick={this.showModal}>Add Worker</Button>
-                </Row>
-                <hr/>
-                <Container>
-                    
-                    <Row className="justify-content-center">
-
-                        <WorkerTable contract={this.state.address} />
-                    </Row>
-                </Container>
- 
             </Container>
-            </Container>
+            </Router>
         )
     }
 
 }
 
-export default Workers
+export default AdminDashboard

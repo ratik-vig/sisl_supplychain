@@ -3,31 +3,21 @@ import "../App.css";
 import Jumbotron from 'react-bootstrap/Jumbotron';
 import {Container, Row, Col, Button} from 'react-bootstrap';
 import getWeb3 from "../getWeb3"
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link
-  } from "react-router-dom";
-import Batches from "./Batches"
+import {Link} from "react-router-dom";
 
 class Landing extends React.Component{
-   
 
-   
 
     render(){
         return(
             
-            <Container fluid className="d-flex flex-column justify-content-center black-back" style={{minHeight:'100vh',height: '100%'}}>
-                <Row>
-                    <Col fluid>
-                        <Jumbotron className="black-back">
+            <Container fluid="true" className="d-flex flex-column justify-content-center black-back w-100 m-0 p-0" style={{minHeight:'100vh',height: '100%'}}>
+                
+                        <Jumbotron className=" w-90 justify-content-center black-back">
                             <h3 className="text-center main-heading" >Welcome. </h3>
                             <h5 className="text-center main-heading">Please select your role to continue. </h5>
                         </Jumbotron>
-                    </Col>
-                </Row>
+                    
                 
                 <Container className="d-flex flex-column">
                     <Row className="m-2 justify-content-center">

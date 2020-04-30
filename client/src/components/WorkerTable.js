@@ -43,7 +43,7 @@ class WorkerTable extends React.Component{
 
     render(){
         return(
-            <Container>
+            <Container className="m-1">
             <Table responsive striped bordered hover>
                 <thead>
                     <tr>

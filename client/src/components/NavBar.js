@@ -5,6 +5,7 @@ import Supplier from "../contracts/Supplier.json"
 import SupplierFactory from '../contracts/SupplierFactory.json'
 import {Navbar,Nav,NavDropdown} from "react-bootstrap"
 import Web3 from "web3"
+import {Link} from "react-router-dom"
 
 
 class NavBar extends React.Component{
@@ -42,10 +43,12 @@ class NavBar extends React.Component{
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav" bg="dark" variant="dark">
                     <Nav className="ml-auto">
-                    <Nav.Link>Home</Nav.Link>
+                    <Nav.Link><Link className="text-white text-decoration-none" to ={`/suppliers/${this.props.contract}/admin`}>Home</Link></Nav.Link>
                     <Nav.Link>Batches</Nav.Link>
                     <Nav.Link>Orders</Nav.Link>
-                    <Nav.Link>Workers</Nav.Link>
+                    <Nav.Link><Link className="text-white text-decoration-none" to ={`/suppliers/${this.props.contract}/admin/workers`}>Workers</Link></Nav.Link>
+                    <Nav.Link><Link className="text-white text-decoration-none" to ={`/suppliers/${this.props.contract}/admin/catalogue`}>Catalogue</Link></Nav.Link>
+
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
