@@ -48,7 +48,7 @@ class Batches extends React.Component{
 
     componentDidMount = async() => {
         try{
-            await window.ethereum.enable()
+            //await window.ethereum.enable()
             const web3 = new Web3(Web3.givenProvider || "https://rinkeby.infura.io/v3/a2e374ab89124948a683277311c6e91e");
 
             const accounts = await web3.eth.getAccounts();
@@ -59,9 +59,7 @@ class Batches extends React.Component{
                 deployedNetwork && deployedNetwork.address,
             );
             this.setState({factory,deployedNetwork,web3})
-            console.log(this.state)
             this.updateUI()
-            console.log(this.state.suppliers)
         }catch(error){
           console.log(error)
         }

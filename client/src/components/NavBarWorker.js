@@ -8,7 +8,7 @@ import Web3 from "web3"
 import {Link} from "react-router-dom"
 
 
-class NavBar extends React.Component{
+class NavBarWorker extends React.Component{
     constructor(props){
         super(props)
         this.state = {
@@ -39,15 +39,13 @@ class NavBar extends React.Component{
     render(){
         return(
             <Navbar collapseOnSelect expand="lg" variant="dark" style={{background: '#000'}}>
-                <Navbar.Brand className="pt-2 mt-1"><h6>{this.state.supp_name}<span className="ml-1 " style={{fontSize: '10px', fontWeight:'bold'}}>ADMIN</span></h6></Navbar.Brand>
+                <Navbar.Brand className="pt-2 mt-1"><h6>{this.state.supp_name}</h6></Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav" bg="dark" variant="dark">
                     <Nav className="ml-auto">
-                    <Nav.Link><Link className="text-white text-decoration-none" to ={`/suppliers/${this.props.contract}/admin`}>Home</Link></Nav.Link>
-                    <Nav.Link><Link className="text-white text-decoration-none" to ={`/suppliers/${this.props.contract}/admin/batches`}>Batches</Link></Nav.Link>
-                    <Nav.Link>Orders</Nav.Link>
-                    <Nav.Link><Link className="text-white text-decoration-none" to ={`/suppliers/${this.props.contract}/admin/workers`}>Workers</Link></Nav.Link>
-                    <Nav.Link><Link className="text-white text-decoration-none" to ={`/suppliers/${this.props.contract}/admin/catalogue`}>Catalogue</Link></Nav.Link>
+                    <Nav.Link><Link className="text-white text-decoration-none" to ={`/suppliers/${this.props.contract}`}>Home</Link></Nav.Link>
+                    <Nav.Link><Link className="text-white text-decoration-none" to ={`/suppliers/${this.props.contract}/batches`}>Batches</Link></Nav.Link>
+                    <Nav.Link><Link className="text-white text-decoration-none" to ={`/suppliers/${this.props.contract}/orders`}>Orders</Link></Nav.Link>
 
                     </Nav>
                 </Navbar.Collapse>
@@ -56,4 +54,4 @@ class NavBar extends React.Component{
     }
 }
 
-export default NavBar
+export default NavBarWorker

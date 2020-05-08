@@ -21,6 +21,7 @@ class SupplierList extends React.Component{
                             <h3>{this.props.data.name}</h3>
                             <p style={{wordWrap: 'break-word'}}>{this.props.data.address}</p>
                             <Link to={`suppliers/${this.props.data.address}/admin`}>Admin Page</Link>
+                            <Link className = "m-5" to={`suppliers/${this.props.data.address}`}>Worker Page</Link>
                 </ListGroup.Item>
            
             

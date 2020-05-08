@@ -4,12 +4,14 @@ contract Supplier {
 
     struct Batch{
         uint uid;
-        string color;
+        string image;
+        string design_name;
+        uint price;
+        uint amount;
         uint area;
-        string image_hash;
-        mapping(string => string) steps;
-        string cur_step;
-        bool completed;
+        mapping(uint => bool) steps;
+        mapping(uint => address) completed_by;
+        uint cur_step;
     }
 
     struct Order{
@@ -37,10 +39,10 @@ contract Supplier {
 
     string public supp_name;
     address public manager;
-    uint public total_batches;
+    uint public total_batches=0;
+    mapping(uint => Batch)public batches;
     address[] public workers_lookup;
     mapping(address => Worker) public workers;
-    Batch[] public batches;
     uint public total_design=0;
     mapping(uint => Design) public designs;
 
@@ -73,35 +75,61 @@ contract Supplier {
         
     }
 
-    function create_batch(string memory _color, uint _area) public onlyManager{
-        Batch memory new_batch = Batch({
-            uid: batches.length-1,
-            color: _color,
-            area: _area,
-            image_hash: '',
-            cur_step: 'Tanning',
-            completed: false
-        });
-        batches.push(new_batch);
+    function create_batch(string memory _design_name, uint _price) public {
         total_batches += 1;
+        batches[total_batches] = Batch({
+            uid: total_batches,
+            image: '',
+            design_name: _design_name,
+            price: _price,
+            amount:0,
+            area: 0,
+            cur_step: 0
+        });
     }
 
-    function transfer_to_tanning(uint batch_id) public{
-        batches[batch_id].cur_step = "Polishing";
-        batches[batch_id].steps['Preparatory Stage'] = 'true';
+    function get_status_for_batch(uint batch_id) public view returns(bool[] memory){
+        bool[] memory arr = new bool[](4);
+        for(uint i = 0; i < 4; i++) {
+            arr[i] = batches[batch_id].steps[i];
+        }
+        return arr;
+    }
+
+    function get_completed_by(uint batch_id) public view returns(address[] memory){
+        address[] memory arr = new address[](4);
+        for(uint i = 0; i < 4; i++) {
+            arr[i] = batches[batch_id].completed_by[i];
+        }
+        return arr;
+    }
+
+    function transfer_to_tanning(uint batch_id, uint _area) public{
+        batches[batch_id].area = _area;
+        batches[batch_id].amount = batches[batch_id].price * _area;
+        batches[batch_id].cur_step = 1;
+        batches[batch_id].steps[0] = true;
+        batches[batch_id].completed_by[0] = msg.sender;
     }
 
     function transfer_to_QC(uint batch_id) public{
-        batches[batch_id].cur_step = "QC";
-        batches[batch_id].steps["Polishing"] = "true";
+        batches[batch_id].cur_step = 2;
+        batches[batch_id].steps[1] = true;
+        batches[batch_id].completed_by[1] = msg.sender;
     }
 
     function quality_check(uint batch_id, string memory img_hash) public{
-        batches[batch_id].image_hash = img_hash;
-        batches[batch_id].steps["QC"] = "true";
-        batches[batch_id].completed = true;
+        batches[batch_id].image = img_hash;
+        batches[batch_id].steps[2] = true;
+        batches[batch_id].completed_by[2] = msg.sender;
+        batches[batch_id].cur_step = 3;
     }
 
+    function pack_batch(uint batch_id) public{
+        batches[batch_id].steps[3] = true;
+        batches[batch_id].completed_by[3] = msg.sender;
+        batches[batch_id].cur_step = 4;
+    }
     modifier onlyManager(){
         require(msg.sender == manager,'You are not authorized.');
         _;

@@ -8,6 +8,7 @@ import NavBar from './components/NavBar'
 import AdminDashboard from './components/AdminDashboard'
 import WorkerTable from './components/WorkerTable'
 import CreateWorker from './components/CreateWorker'
+import WorkerDashboard from './components/WorkerDashboard'
 import {
   BrowserRouter as Router,
   Switch,
@@ -27,6 +28,7 @@ class App extends React.Component{
         <Switch>
           <Route exact path = "/" component={Landing} />
           <Route path={'/suppliers/:address/admin'} component={AdminDashboard}/>
+          <Route path={'/suppliers/:address'} component={WorkerDashboard} />
           <Route path="/suppliers" render={() => <Batches />} />
           
         </Switch>

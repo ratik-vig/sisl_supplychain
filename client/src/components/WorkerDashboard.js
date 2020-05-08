@@ -2,27 +2,30 @@ import React from 'react'
 import "../App.css";
 import {Container, Row, Form, Button, Spinner,Modal} from 'react-bootstrap';
 import getWeb3 from "../getWeb3";
-import NavBar from "./NavBar"
+import NavBarWorker from "./NavBarWorker"
 import WorkerTable from "./WorkerTable"
 import CreateWorker from "./CreateWorker"
-import {BrowserRouter as Router, Switch, Route} from "react-router-dom"
+import {BrowserRouter as Router, Switch, Route,Link} from "react-router-dom"
 import AdminWorkerTab from './AdminWorkerTab';
 import AdminHome from './AdminHome'
 import AdminCatalogue from './AdminCatalogue'
 import AdminBatches from './AdminBatches'
+import BatchTab from './BatchTab'
 
-class AdminDashboard extends React.Component{
+class WorkerDashboard extends React.Component{
     
     constructor(props){
         super(props)
         this.state={
             show: false,
-            address: ''
+            address: '',
+            batch: 1
         }
     }
 
     componentDidMount = () =>{
         const {address} = this.props.match.params
+        console.log(address)
         this.setState({address})
     }
 
@@ -32,12 +35,13 @@ class AdminDashboard extends React.Component{
         return(
             <Router>
             <Container fluid className="m-0 p-0">
-                <NavBar contract={this.state.address}/>
+                <NavBarWorker contract={this.state.address}/>
                 <Switch>
-                    <Route exact path = '/suppliers/:address/admin' component={AdminHome} />
-                    <Route path= '/suppliers/:address/admin/workers' component={AdminWorkerTab}/>
-                    <Route path = '/suppliers/:address/admin/catalogue' component={AdminCatalogue}/>
-                    <Route path = '/suppliers/:address/admin/batches' component={AdminBatches} />
+                    <Route exact path = '/suppliers/:address' component={AdminHome} />
+                    <Route path= '/suppliers/:address/orders' component={AdminWorkerTab}/>
+                    
+                    <Route path = '/suppliers/:address/batches' component={BatchTab} />
+                    
                 </Switch>
             
             </Container>
@@ -47,4 +51,4 @@ class AdminDashboard extends React.Component{
 
 }
 
-export default AdminDashboard
+export default WorkerDashboard
